@@ -46,6 +46,7 @@ export default function Page() {
     title: "Timeline",
     subtitle: "Aceternity UI",
     icon: "A", // Just using the letter for now
+    url: "https://ui.aceternity.com/components/timeline",
     content: (
       <div className="flex flex-col items-center justify-center py-10 px-4 md:px-20 text-center">
         <h2 className="text-3xl font-medium mb-4">Changelog from my journey</h2>
@@ -409,6 +410,7 @@ export default function Page() {
                 variant="ghost"
                 size="sm"
                 className="h-8 text-xs font-medium"
+                onClick={() => window.open(selectedItem?.url || "#", "_blank")}
               >
                 Open <ExternalLink className="ml-1 h-3 w-3" />
               </Button>
