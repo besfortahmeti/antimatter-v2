@@ -5,24 +5,38 @@
       "name": "Component 1",
       "category": "Category 1",
       "tags": ["Tag 1", "Tag 2", "Tag 3"],
-      "promt": "Promt 1",
+      "prompt": "Promt 1",
       "description": "",
       "image": "",
       "video": "",
       "code": "",
-      "url": ""
+      "created_at": "",
+      "updated_at": ""
+ 
     },
     {
       "id": 2,
       "name": "Component 2",
       "category": "Category 2",
       "tags": ["Tag 1", "Tag 2", "Tag 3"],
-      "promt": "Promt 2",
+      "prompt": "Promt 2",
       "description": "",
       "image": "",
       "video": "",
       "code": "",
-      "url": ""
+      "created_at": "",
+      "updated_at": ""
+  
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Category 1"
+    },
+    {
+      "id": 2,
+      "name": "Category 2"
     }
   ]
 }

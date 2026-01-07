@@ -1,5 +1,5 @@
 import apiClient from "@/lib/api-client";
-import { Todo } from "../lib/types";
+import { Todo, Component } from "../lib/types";
 
 export const getTodo = async (id: number) => {
   const response = await apiClient.get(
@@ -42,6 +42,14 @@ export const updateTodo = async (id: number, todo: Todo) => {
 export const deleteTodo = async (id: number) => {
   const response = await apiClient.delete(
     `https://jsonplaceholder.typicode.com/todos/${id}`
+  );
+  return response.data;
+};
+
+export const createComponent = async (component: Component) => {
+  const response = await apiClient.post(
+    "components",
+    component
   );
   return response.data;
 };

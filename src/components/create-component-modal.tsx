@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Plus } from "lucide-react";
+import { useCreateComponent } from "@/services/mutation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -36,14 +37,15 @@ const formSchema = z.object({
     .min(1, { message: "At least one tag is required (comma separated)." }),
   promt: z.string().min(1, { message: "Prompt is required." }),
   description: z.string().optional(),
-  image: z.string().optional(),
-  video: z.string().optional(),
+  image: z.any().optional(),
+  video: z.any().optional(),
   code: z.string().optional(),
   url: z.string().optional(),
 });
 
 export function CreateComponentModal() {
   const [open, setOpen] = useState(false);
+  const { mutateAsync: createComponent } = useCreateComponent();
   // Casting resolver to any to avoid type mismatch issues between zod v3/v4 and hookform resolvers
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as any,
@@ -61,14 +63,27 @@ export function CreateComponentModal() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const formattedValues = {
       ...values,
       tags: values.tags.split(",").map((tag) => tag.trim()),
+      image:
+        values.image instanceof File
+          ? URL.createObjectURL(values.image)
+          : values.image,
+      video:
+        values.video instanceof File
+          ? URL.createObjectURL(values.video)
+          : values.video,
     };
-    console.log(formattedValues);
-    setOpen(false);
-    form.reset();
+
+    try {
+      await createComponent(formattedValues as any);
+      setOpen(false);
+      form.reset();
+    } catch (error) {
+      console.error("Failed to create component", error);
+    }
   }
 
   return (
@@ -180,11 +195,19 @@ export function CreateComponentModal() {
               <FormField
                 control={form.control}
                 name="image"
-                render={({ field }) => (
+                render={({ field: { value, onChange, ...fieldProps } }) => (
                   <FormItem>
-                    <FormLabel>Image URL</FormLabel>
+                    <FormLabel>Image</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://..." {...field} />
+                      <Input
+                        {...fieldProps}
+                        placeholder="Picture"
+                        type="file"
+                        accept="image/*"
+                        onChange={(event) => {
+                          onChange(event.target.files && event.target.files[0]);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -193,11 +216,19 @@ export function CreateComponentModal() {
               <FormField
                 control={form.control}
                 name="video"
-                render={({ field }) => (
+                render={({ field: { value, onChange, ...fieldProps } }) => (
                   <FormItem>
-                    <FormLabel>Video URL</FormLabel>
+                    <FormLabel>Video</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://..." {...field} />
+                      <Input
+                        {...fieldProps}
+                        placeholder="Video"
+                        type="file"
+                        accept="video/*"
+                        onChange={(event) => {
+                          onChange(event.target.files && event.target.files[0]);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

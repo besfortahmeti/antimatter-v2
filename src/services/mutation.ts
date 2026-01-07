@@ -1,6 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { createTodo, updateTodo, deleteTodo } from "./api";
-import { Todo } from "../lib/types";
+import { createTodo, updateTodo, deleteTodo, createComponent } from "./api";
+import { Todo, Component } from "../lib/types";
+
+export const useCreateComponent = () => {
+  return useMutation({
+    mutationFn: createComponent,
+  });
+};
 
 export const useCreateTodo = () => {
   return useMutation({
