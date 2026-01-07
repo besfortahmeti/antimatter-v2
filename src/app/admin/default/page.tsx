@@ -1,9 +1,9 @@
 "use client"
 
-import { ChartAreaInteractive } from "./_components/chart-area-interactive";
-import data from "./_components/data.json";
-import { DataTable } from "./_components/data-table";
-import { SectionCards } from "./_components/section-cards";
+import { ChartAreaInteractive } from "./components/chart-area-interactive";
+import data from "./components/data.json";
+import { DataTable } from "./components/data-table";
+import { SectionCards } from "./components/section-cards";
 
 export default function Page() {
   return (
