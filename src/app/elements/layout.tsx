@@ -1,12 +1,13 @@
-import type { ReactNode } from "react";
-import { Header } from "@/components/header";
+import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "./components/app-sidebar";
-import "./globals.css";
+
+import { Header } from "@/components/header";
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <SidebarProvider>
       <AppSidebar />

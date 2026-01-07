@@ -1,3 +1,5 @@
+"use client"
+
 import { ChartAreaInteractive } from "./_components/chart-area-interactive";
 import data from "./_components/data.json";
 import { DataTable } from "./_components/data-table";
