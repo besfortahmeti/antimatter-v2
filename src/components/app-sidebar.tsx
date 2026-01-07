@@ -29,7 +29,10 @@ import {
   Webhook,
   Wand2,
   MessageSquare,
+  Package,
 } from "lucide-react";
+
+import Link from "next/link";
 
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
@@ -49,9 +52,9 @@ import {
 const data = {
   top: [
     {
-      title: "Best Claude Code GUI",
-      url: "#",
-      icon: Sparkles,
+      title: "Apps",
+      url: "/applications",
+      icon: Package,
     },
     {
       title: "Canvas Prototyping",
@@ -182,9 +185,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             {data.top.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton tooltip={item.title}>
-                  <item.icon />
-                  <span>{item.title}</span>
+                <SidebarMenuButton asChild tooltip={item.title}>
+                  <Link href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
