@@ -15,6 +15,7 @@ import {
   ReceiptText,
   ShoppingBag,
   SquareArrowUpRight,
+  Tag,
   Users,
 } from "lucide-react";
 
@@ -136,6 +137,11 @@ export const sidebarItems: NavGroup[] = [
         comingSoon: true,
       },
       {
+        title: "Categories",
+        url: "/admin/categories",
+        icon: Tag,
+      },
+      {
         title: "Authentication",
         url: "/auth",
         icon: Fingerprint,
@@ -148,5 +154,4 @@ export const sidebarItems: NavGroup[] = [
       },
     ],
   },
-
 ];

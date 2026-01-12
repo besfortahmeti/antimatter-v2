@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import { CreateComponentModal } from "@/components/create-component-modal";
+// import { CreateComponentModal } from "@/components/create-component-modal";
 
 export const Header = () => {
   return (
@@ -33,7 +33,7 @@ export const Header = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <CreateComponentModal />
+      {/* <CreateComponentModal /> */}
     </header>
   );
 };

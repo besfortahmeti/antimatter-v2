@@ -1,53 +1,21 @@
 "use client";
 
+import { Monitor, Package, Search } from "lucide-react";
 import * as React from "react";
-import {
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  Settings2,
-  SquareTerminal,
-  Search,
-  Sparkles,
-  Monitor,
-  Home,
-  LayoutTemplate,
-  Megaphone,
-  Image,
-  Square,
-  MousePointerClick,
-  Users,
-  ArrowLeftRight,
-  PanelBottom,
-  List,
-  Star,
-  Webhook,
-  Wand2,
-  MessageSquare,
-  Package,
-} from "lucide-react";
 
 import Link from "next/link";
 
-import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarGroup,
 } from "@/components/ui/sidebar";
+import { useCategories } from "../services/query";
+import { ScrollArea } from "./ui/scroll-area";
 
 const data = {
   top: [
@@ -62,116 +30,10 @@ const data = {
       icon: Monitor,
     },
   ],
-  components: [
-    {
-      title: "Main",
-      url: "#",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Feed",
-      url: "#",
-      icon: Sparkles, // Or Rss
-      badge: "Beta",
-      badgeClassName:
-        "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
-    },
-    {
-      title: "Best of the Week",
-      url: "#",
-      icon: Star, // Trophy not in import, using Star or Sparkles
-      badge: "Back!",
-      badgeClassName:
-        "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400",
-    },
-    {
-      title: "Marketing Blocks",
-      url: "#",
-      icon: LayoutTemplate,
-    },
-    {
-      title: "Announcements",
-      url: "#",
-      icon: Megaphone,
-      badge: 10,
-    },
-    {
-      title: "Beckgrounds",
-      url: "#",
-      icon: Image,
-      badge: 33,
-    },
-    {
-      title: "Borders",
-      url: "#",
-      icon: Square,
-      badge: 12,
-    },
-    {
-      title: "Calls to Action",
-      url: "#",
-      icon: MousePointerClick,
-      badge: 34,
-    },
-    {
-      title: "Clients",
-      url: "#",
-      icon: Users,
-      badge: 16,
-    },
-    {
-      title: "Comparisons",
-      url: "#",
-      icon: ArrowLeftRight,
-      badge: 6,
-    },
-    {
-      title: "Docks",
-      url: "#",
-      icon: PanelBottom,
-      badge: 6,
-    },
-    {
-      title: "Features",
-      url: "#",
-      icon: List,
-      badge: 36,
-    },
-    {
-      title: "Footers",
-      url: "#",
-      icon: PanelBottom,
-      badge: 14,
-    },
-    {
-      title: "Heroes",
-      url: "#",
-      icon: Star,
-      badge: 73,
-    },
-    {
-      title: "Hooks",
-      url: "#",
-      icon: Webhook,
-      badge: 31,
-    },
-  ],
-  legacy: [
-    {
-      title: "Magic MCP",
-      url: "#",
-      icon: Wand2,
-    },
-    {
-      title: "Magic Chat",
-      url: "#",
-      icon: MessageSquare,
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: categories } = useCategories();
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader className="px-4 py-2">
@@ -186,7 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             {data.top.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild tooltip={item.title}>
-                  <Link href={item.url}>
+                  <Link href={item.url || "#"}>
                     <item.icon />
                     <span>{item.title}</span>
                   </Link>
@@ -195,18 +57,30 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ))}
           </SidebarMenu>
         </SidebarGroup>
-        <NavMain items={data.components} label="Components" />
-        <NavMain items={data.legacy} label="Legacy tools" />
+
+        <SidebarGroup>
+          <div className="px-2">
+            <h3 className="mb-2 px-2 text-xs font-semibold uppercase text-muted-foreground">
+              Categories
+            </h3>
+            <ScrollArea className="h-[670px] pr-4">
+              <div className="flex flex-col gap-3 ml-2">
+                {categories?.items?.map((item: any) => (
+                  <Link
+                    key={item.id}
+                    href={`/categories/${item.id}`}
+                    className="flex items-center gap-2"
+                  >
+                    {/* category icon from lucide-react */}
+                    <Package className="h-4 w-4 text-gray-500" />
+                    <span className="text-sm text-gray-500">{item.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>
-              <span>Log in</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </Sidebar>
   );
 }

@@ -1,9 +1,8 @@
-export interface Todo {
-  userId: number;
+export type Category = {
   id: number;
-  title: string;
-  completed: boolean;
-}
+  name: string | null;
+  icon: string | null;
+};
 
 export interface Component {
   id: number;
