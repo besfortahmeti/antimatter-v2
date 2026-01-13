@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui";
-import { Dialog } from "@radix-ui/react-dialog";
-import { DialogContent } from "@radix-ui/react-dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Bookmark,
   Copy,
@@ -11,6 +10,12 @@ import {
   Share,
   X,
 } from "lucide-react";
+import { Runner } from "react-runner";
+import * as ShadcnUI from "@/components/ui";
+import { cn } from "@/lib/utils";
+import * as React from "react";
+
+import { FieldGroup, Field, FieldLabel, FieldDescription } from "../data";
 
 interface ElementDetailsProps {
   open: boolean;
@@ -83,7 +88,9 @@ export const ElementDetails = ({
               variant="ghost"
               size="sm"
               className="h-8 text-xs font-medium"
-              onClick={() => window.open(selectedItem?.url || "#", "_blank")}
+              onClick={() =>
+                window.open(`/preview/${selectedItem?.id || 1}`, "_blank")
+              }
             >
               Open <ExternalLink className="ml-1 h-3 w-3" />
             </Button>
@@ -106,7 +113,18 @@ export const ElementDetails = ({
 
         {/* Content Body */}
         <div className="p-0 overflow-y-auto max-h-[80vh]">
-          {selectedItem?.content}
+          <Runner
+            code={selectedItem?.code || ""}
+            scope={{
+              ...ShadcnUI,
+              React,
+              cn,
+              FieldGroup,
+              Field,
+              FieldLabel,
+              FieldDescription,
+            }}
+          />
         </div>
       </DialogContent>
     </Dialog>
